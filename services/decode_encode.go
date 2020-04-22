@@ -21,23 +21,25 @@ func decodegetstudentreq(_ context.Context, r *http.Request) (request interface{
 }
 
 func encodeResponse(ctx context.Context, w http.ResponseWriter, response interface{}) error {
-	// if e, ok := response.(error); ok && e.error() != nil {
-	// 	// Not a Go kit transport error, but a business-logic error.
-	// 	// Provide those as HTTP errors.
-	// 	encodeError(ctx, e.error(), w)
-	// 	return nil
-	// }
+
 	fmt.Println("this is encode response", response.(Student))
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return json.NewEncoder(w).Encode(response)
 }
 
 func decodesetstudentrequest(_ context.Context, r *http.Request) (request interface{}, err error) {
-	fmt.Println("this is set student decode rerquest")
 
 	var req setstudentrequest
 
-	json.NewDecoder(r.Body).Decode(&req)
+	json.NewDecoder(r.Body).Decode(&req.student)
+	fmt.Println("this is set student decode rerquest", req)
 
 	return req, nil
+}
+
+func encodesetStudentsResponse(ctx context.Context, w http.ResponseWriter, response interface{}) error {
+
+	fmt.Println("this is encode setstudent response")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	return json.NewEncoder(w).Encode(response.([]Student))
 }

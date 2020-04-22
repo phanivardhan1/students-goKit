@@ -6,7 +6,7 @@ import (
 )
 
 type Service interface {
-	SetStudent(ctx context.Context, student Student) error
+	SetStudent(ctx context.Context, student Student) []Student
 	GetStudent(ctx context.Context, id int) (Student, error)
 	DeleteStudent(ctx context.Context, id int) error
 	GetStudents(ctx context.Context) ([]Student, error)
@@ -59,10 +59,10 @@ func NewStudentservice() *Studentservice {
 
 }
 
-func (s *Studentservice) SetStudent(ctx context.Context, student Student) error {
+func (s *Studentservice) SetStudent(ctx context.Context, student Student) []Student {
 	s.Students = append(s.Students, student)
 	fmt.Println(s.Students)
-	return nil
+	return s.Students
 }
 
 func (s *Studentservice) GetStudent(ctx context.Context, id int) (Student, error) {

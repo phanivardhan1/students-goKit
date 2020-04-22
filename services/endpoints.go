@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/go-kit/kit/endpoint"
 )
@@ -27,9 +28,10 @@ func MakesetstudentEnpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 
 		req := request.(setstudentrequest)
-		err = s.SetStudent(ctx, req.student)
-
-		return setstudentresponse{err: nil}, nil
+		fmt.Println("this is set student endpoint request", req)
+		students := s.SetStudent(ctx, req.student)
+		fmt.Println("this is set student end point result")
+		return students, nil
 	}
 
 }
@@ -70,7 +72,7 @@ type setstudentrequest struct {
 }
 
 type setstudentresponse struct {
-	err error
+	students []Student
 }
 
 type getstudentrequest struct {

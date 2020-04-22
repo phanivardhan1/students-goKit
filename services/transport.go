@@ -11,6 +11,6 @@ func MakeHandlers(s Service) http.Handler {
 	r := mux.NewRouter()
 	e := MakeserverEndpoints(s)
 	r.Methods("GET").Path("/getstudent/{id}").Handler(httptransport.NewServer(e.getstudent, decodegetstudentreq, encodeResponse))
-	r.Methods("POST").Path("/setstudent").Handler(httptransport.NewServer(e.setstudent, decodesetstudentrequest, encodeResponse))
+	r.Methods("POST").Path("/setstudent").Handler(httptransport.NewServer(e.setstudent, decodesetstudentrequest, encodesetStudentsResponse))
 	return r
 }

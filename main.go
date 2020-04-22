@@ -13,7 +13,16 @@ func main() {
 
 	service := services.NewStudentservice()
 
-	handler := services.MakeHandlers(service)
+	restHandler := services.MakeHandlers(service)
+	restServer := &http.Server{
+		Addr:    ":8081",
+		Handler: restHandler,
+	}
+	err := restServer.ListenAndServe()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	//gRPCServer := http.Server{}
 
-	http.ListenAndServe(":8081", handler)
+	//http.ListenAndServe(":8081", handler)
 }
